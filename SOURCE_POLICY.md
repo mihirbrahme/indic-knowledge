@@ -88,7 +88,113 @@ Use only for:
 
 Never treat these as authoritative evidence merely because they are widely repeated.
 
+## Source readiness model
+
+This model governs whether a text may be worked on. It is the practical
+counterpart to the multiple-witness rule below, which describes an ideal
+rather than a precondition.
+
+### usable
+
+At least one credible source exists that:
+
+- clearly corresponds to the intended text and recension;
+- has identifiable institutional, scholarly, or edition provenance;
+- allows passages to be located reliably enough for research.
+
+This is sufficient to begin editorial work. A single good source is enough.
+
+### well-supported
+
+A usable source exists, plus one or more of:
+
+- another useful textual witness;
+- a printed or critical edition anchor;
+- an institutional repository;
+- a commentary or translation useful for interpretation.
+
+### source-gap
+
+No sufficiently trustworthy or identifiable source exists for reliable
+passage-level work.
+
+Do not require two independent witnesses merely to classify a text as usable.
+A text is not blocked from research because its second witness is missing,
+inaccessible, or derivative.
+
+### Readiness does not relax recension discipline
+
+Readiness asks whether we have a good enough source. It never asks whether we
+have a source for something near enough.
+
+A single good source is sufficient only where it actually matches the
+intended:
+
+- text;
+- recension;
+- shakha where material;
+- textual layer where material.
+
+A high-quality source for the wrong recension is not an acceptable
+substitute, and no degree of institutional authority makes it one. Where the
+matching source is weak and a non-matching source is strong, the text is a
+source-gap, not a usable text.
+
+## Editorial verification principle
+
+Source verification is proportional to the claim being made.
+
+A straightforward entry explaining a clearly attested passage may proceed
+from one strong source.
+
+Additional verification should be sought during the editorial pass when:
+
+- the reading is disputed;
+- recensions differ materially;
+- translation choices affect the argument;
+- the entry makes a historical priority claim;
+- the entry claims scientific correspondence;
+- the entry claims influence or transmission;
+- the passage is medically sensitive;
+- the passage is controversial;
+- the text survives fragmentarily or through reconstruction.
+
+The trigger is the claim, not the text. The same passage may need one source
+to say what it says and several to support what an entry wants to argue from
+it. Verification effort belongs where the argument carries weight.
+
+## Controversial passages
+
+Some approved texts contain material that is socially contested in the
+present and is frequently quoted out of context. `CLAIM_POLICY.md` governs how
+such material is written about. This section governs what sourcing it
+requires.
+
+Before a controversial passage is published, the editorial pass must secure:
+
+1. the exact Sanskrit text;
+2. identification of the edition it is taken from;
+3. the immediate textual context surrounding it;
+4. traditional commentary where available;
+5. relevant scholarly discussion;
+6. a clear distinction between descriptive historical analysis and
+   present-day endorsement.
+
+This is the proportionality principle applied, not an exception to it. A
+contested passage is a high-stakes claim and earns a fuller chain.
+
+Do not sanitise such passages. Do not sensationalise them. Omitting the
+material is not neutrality, and quoting it without its edition, context and
+reception is not accuracy.
+
+The source registry itself does not editorialise. It records what a source is
+and what its limits are; the judgement belongs to the editorial pass.
+
 ## Multiple-witness rule
+
+This rule describes the strongest evidence chain, which canonical passage
+work should aim at. It is NOT a precondition for beginning research; see the
+readiness model above.
 
 For a canonical primary-text passage, prefer:
 
@@ -97,6 +203,14 @@ For a canonical primary-text passage, prefer:
 3. one edition anchor where available.
 
 Do not count three websites as independent witnesses if they derive from the same electronic transcription.
+
+Different repositories are not automatically independent witnesses.
+
+Two independently typed electronic texts based on the same printed edition provide transcription verification, not fully independent textual verification.
+
+Transcription verification establishes that the digital text faithfully reproduces its printed source. It says nothing about whether that source constituted the text correctly. Independent textual verification requires a materially separate edition, or independently consulted manuscript evidence.
+
+Where a witness does not state the printed edition behind it, its independence cannot be assumed. Transcription independence is then the most that may be credited, and only where separate authorship of the transcription is itself documented.
 
 ## Edition awareness
 
@@ -206,11 +320,17 @@ Before a passage becomes canonical:
 
 1. verify its exact reference;
 2. verify the source-language text;
-3. check at least the required source witnesses;
+3. check the source witnesses the claim requires, per the editorial
+   verification principle;
 4. record material variants;
 5. confirm the citation scheme;
 6. verify transliteration;
 7. distinguish source text from editorial normalization.
+
+Step 3 scales with the claim. A plainly attested passage may rest on the one
+usable source; a disputed reading, a material recension difference, or a
+priority, correspondence, or transmission claim calls for more. What must
+always be recorded is which source was actually used and what its limits are.
 
 ## Translation sourcing
 

@@ -1,0 +1,242 @@
+version: 1
+updated: 2026-09-21
+status: active
+
+# Corpus family taxonomy for the Indic Knowledge project.
+#
+# A family is an organisational grouping used for internal metadata, editorial
+# variety, and scheduling balance. It is not the reader-facing taxonomy, which
+# EDITORIAL_STANDARD.md frames as questions and pathways.
+#
+# Family membership does not approve a text. A work becomes an approved project
+# text only when it is listed in data/corpus.yaml with its permitted source
+# witnesses registered in data/sources.yaml (SOURCE_POLICY.md).
+#
+# `nature` records the dominant character of the material normally placed in the
+# family, not a rule about every individual work:
+#   primary-text  - the family is chiefly constituted by source works
+#   commentarial  - the family is chiefly constituted by works expounding others
+#   mixed         - the family routinely holds both in significant measure
+#
+# Subfamilies are deliberately not defined at this stage.
+
+nature_values:
+  - primary-text
+  - commentarial
+  - mixed
+
+families:
+  - id: veda-samhita
+    label: Veda Samhita
+    description: >-
+      The mantra collections of the four Vedas, transmitted in distinct
+      recensions and shakhas with their own accentual and recitational
+      traditions.
+    nature: primary-text
+    scope_notes:
+      - Recension and shakha must always be stated; do not merge witnesses into a single undifferentiated text.
+      - Accent and metre are part of the evidence and must not be silently normalised.
+      - Ritual application of a mantra belongs with the Brahmana or Sutra material that prescribes it, not here.
+      - Padapatha, kramapatha and other recitational forms are witnesses to this material, not separate works.
+
+  - id: brahmana
+    label: Brahmana
+    description: >-
+      Prose works attached to the Samhitas that expound sacrificial ritual, its
+      procedure, and its reasoning, and that also carry substantial narrative
+      and speculative material.
+    nature: primary-text
+    scope_notes:
+      - Treated as primary shruti text even though the genre is itself exegetical in function.
+      - Each Brahmana belongs to a specific shakha; that attachment must be recorded.
+      - The boundary with Aranyaka material follows the received arrangement of each shakha and differs across traditions.
+
+  - id: aranyaka
+    label: Aranyaka
+    description: >-
+      Texts positioned between Brahmana and Upanishad material, concerned with
+      ritual understood symbolically and with restricted or forest-associated
+      instruction.
+    nature: primary-text
+    scope_notes:
+      - Boundaries with both Brahmana and Upanishad material frequently overlap; cite by the received division of the specific shakha.
+      - Some Upanishads are embedded within Aranyakas; record the containment rather than duplicating the text.
+
+  - id: upanishad
+    label: Upanishad
+    description: >-
+      Texts chiefly concerned with the self, Brahman, knowledge, and liberation,
+      ranging from early works embedded in Vedic collections to later
+      independent compositions.
+    nature: primary-text
+    scope_notes:
+      - Distinguish Upanishads embedded in a Vedic shakha from later independent and sectarian works; the label alone does not establish antiquity or authority.
+      - Canonical lists differ by tradition; the project does not adopt a single list as definitive.
+      - Systematic philosophical readings of these texts belong to the darshana or commentary families, not to the text record itself.
+
+  - id: vedanga
+    label: Vedanga
+    description: >-
+      The auxiliary disciplines developed to preserve and apply the Vedic
+      corpus - shiksha, chandas, vyakarana, nirukta, kalpa, and jyotisha.
+    nature: mixed
+    scope_notes:
+      - This family deliberately overlaps others; kalpa material is placed in the sutra families, while vyakarana and jyotisha have their own families covering their wider later literatures.
+      - Use this family for works whose primary identity is Vedic-auxiliary, especially shiksha, chandas, nirukta, and pratishakhya material.
+      - Overlap must be recorded explicitly per work in data/corpus.yaml rather than resolved by silent reassignment.
+
+  - id: shrauta-sutra
+    label: Shrauta Sutra
+    description: >-
+      Kalpa works codifying the procedure of the solemn public sacrifices in
+      condensed sutra form, organised by shakha.
+    nature: primary-text
+    scope_notes:
+      - Attachment to a specific shakha and Samhita tradition must be recorded.
+      - Paribhasha, prayoga, and later manual literature are commentarial or applied material, not the sutra text.
+      - These texts prescribe procedure; they are not by themselves evidence that a rite was performed as described in any given period.
+
+  - id: grihya-sutra
+    label: Grihya Sutra
+    description: >-
+      Kalpa works codifying domestic rites, including the life-cycle
+      observances, likewise organised by shakha.
+    nature: primary-text
+    scope_notes:
+      - Attachment to a specific shakha must be recorded.
+      - Prescription must be distinguished from historical social practice, which requires independent historical sourcing.
+      - Overlaps Dharma Sutra material where domestic rite and normative rule meet.
+
+  - id: shulba-sutra
+    label: Shulba Sutra
+    description: >-
+      Kalpa works on the measurement and construction of sacrificial altars,
+      containing the earliest surviving Indian geometric procedures.
+    nature: primary-text
+    scope_notes:
+      - Transmitted as part of Shrauta Sutra traditions; this family separates them for their geometric content, and the parent Shrauta attachment must still be recorded.
+      - Present the procedures as the text states them rather than restating them in modern formalism the source does not support.
+      - Claims of priority or influence require independent history-of-mathematics sourcing under CLAIM_POLICY.md.
+
+  - id: dharma-sutra
+    label: Dharma Sutra
+    description: >-
+      Early sutra works, in prose and mixed verse, on norms, duty, law, and
+      conduct, associated with particular Vedic schools.
+    nature: primary-text
+    scope_notes:
+      - Kept distinct from the later versified Dharmashastra family; the two are continuous in subject but differ in form, transmission, and scholarly treatment.
+      - Contains socially contested material that must be quoted accurately and contextualised rather than omitted or sanitised.
+      - Normative statements record prescription, not attested practice.
+
+  - id: dharmashastra
+    label: Dharmashastra
+    description: >-
+      The later versified smriti literature on law, duty, and social order,
+      together with its extensive commentarial and digest tradition.
+    nature: mixed
+    scope_notes:
+      - Covers both the smriti works themselves and the bhashya and nibandha literature through which they were largely interpreted in practice.
+      - Commentators materially disagree; no single reading may be presented as the Dharmashastra position.
+      - Text, commentary, historical legal practice, and colonial-era reception are separate claim classes and must not be merged.
+
+  - id: itihasa
+    label: Itihasa
+    description: >-
+      The epic narrative tradition, including its embedded didactic,
+      philosophical, and normative sections.
+    nature: primary-text
+    scope_notes:
+      - Critical editions and vulgate or regional recensions differ substantially; the edition and its numbering must always be stated.
+      - Embedded philosophical sections may be cited in their own right while remaining located within the epic.
+      - Narrative content is not historical evidence; historical claims require separate sourcing.
+
+  - id: darshana
+    label: Darshana
+    description: >-
+      The systematic philosophical traditions, comprising their root sutra or
+      karika texts together with the layered commentarial literature through
+      which the systems were argued.
+    nature: mixed
+    scope_notes:
+      - Root text and commentary must remain separable even where a system is known chiefly through its commentaries.
+      - Schools disagree substantively; do not collapse them into a single Indic position.
+      - Buddhist and Jaina philosophical traditions participate in the same arguments but have no separate family at this stage.
+
+  - id: vyakarana
+    label: Vyakarana
+    description: >-
+      The grammatical tradition, from the rule-systems themselves through their
+      commentarial layers and the philosophy of language developed within them.
+    nature: mixed
+    scope_notes:
+      - Overlaps the vedanga family by origin and the darshana family where linguistic philosophy is the subject.
+      - Rule-system mechanics, commentarial interpretation, and modern linguistic or computational comparison are distinct claim classes.
+      - Lexical and etymological works may sit here until a dedicated family is approved.
+
+  - id: ayurveda
+    label: Ayurveda
+    description: >-
+      The classical medical tradition, comprising its major compendia, later
+      compilations, and the commentaries upon them.
+    nature: mixed
+    scope_notes:
+      - The received compendia are themselves layered and redacted; recension and edition must be recorded.
+      - Historical medical theory, historical observation, traditional therapeutic claim, and modern biomedical evidence must be kept separate.
+      - Nothing in this family may be presented as current clinical guidance.
+
+  - id: ganita
+    label: Ganita
+    description: >-
+      Mathematical works and the mathematical portions of scientific treatises,
+      including arithmetic, algebra, geometry, series, and trigonometry.
+    nature: mixed
+    scope_notes:
+      - Much mathematical material is transmitted inside astronomical works; placement should follow the work's principal subject and the overlap should be recorded.
+      - Commentaries often carry the demonstrations and are primary evidence for the mathematics, not secondary summary.
+      - Reconstruct rules as stated; do not retroject modern notation or generality onto the source.
+
+  - id: jyotisha
+    label: Jyotisha
+    description: >-
+      Astronomical and calendrical works, together with the computational and
+      divinatory traditions transmitted under the same disciplinary name.
+    nature: mixed
+    scope_notes:
+      - Distinguish observation, computational rule, predictive model, and cosmology; a working computation does not validate the cosmology surrounding it.
+      - Mathematical astronomy and astrological or omen literature both fall here and must be labelled distinctly in any entry.
+      - Claims of transmission between traditions require independent history-of-science sourcing.
+
+  - id: artha-statecraft
+    label: Artha and Statecraft
+    description: >-
+      Works on governance, administration, economy, policy, and political
+      conduct, including the niti literature.
+    nature: mixed
+    scope_notes:
+      - Composite authorship and layered redaction are common; dating and attribution are historical claims requiring separate evidence.
+      - Prescriptive administrative detail is not a record of how any state actually operated.
+      - Overlaps dharmashastra where normative rule and political administration meet.
+
+  - id: aesthetics
+    label: Aesthetics and Poetics
+    description: >-
+      Works on drama, poetics, aesthetic experience, music, and the arts,
+      including the theoretical literature on rasa and related concepts.
+    nature: mixed
+    scope_notes:
+      - Several of the tradition's decisive positions are argued in commentaries, which belong within this family's evidence.
+      - Technical terms are contested within the tradition itself and should not be reduced to single English equivalents.
+      - Poetic and dramatic works themselves fall under no family at this stage; this family holds the theoretical literature.
+
+  - id: commentary
+    label: Commentary
+    description: >-
+      Exegetical literature - bhashya, vritti, tika, varttika, and digest -
+      treated as a family in its own right.
+    nature: commentarial
+    scope_notes:
+      - "This family is cross-cutting: a commentary also belongs to the family of the work it expounds, and both must be recorded."
+      - Use it for commentaries whose intellectual importance warrants treating them as works in their own right.
+      - A commentator's view must be verified against the commentary itself or a recognised edition or translation, never from a popular summary.
+      - Commentarial claims remain a distinct claim class from textual claims.

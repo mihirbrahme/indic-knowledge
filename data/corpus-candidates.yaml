@@ -1,0 +1,174 @@
+version: 1
+updated: 2026-09-21
+
+# Works identified during Corpus v1 work that are NOT approved project texts.
+#
+# A record here carries no approval of any kind. Nothing in this file may be
+# cited, drafted from, or treated as available; a candidate becomes usable only
+# by being moved into data/corpus.yaml with status: approved, which is a human
+# editorial decision under AGENTS.md.
+#
+# Candidates are recorded so that material noticed at the edge of an approved
+# text is not silently lost.
+
+candidates:
+  - id: chandogya-brahmana-non-upanishadic
+    title: Chandogya Brahmana material outside the Chandogya Upanishad
+    reason: >-
+      The Chandogya Upanishad is an approved text transmitted as part of the
+      Chandogya Brahmana, but the Brahmana's remaining material lies outside
+      Corpus v1. This leaves the containing work of an approved text
+      unregistered, so chandogya-upanishad currently carries
+      embedded_in.text_id: null.
+    status: review-later
+    notes:
+      - The non-Upanishadic portion consists chiefly of mantra and domestic-rite material, distinct in character from the Upanishadic prapathakas.
+      - Also referred to as the Mantra Brahmana in parts of the literature; the naming and the division between the two portions must be checked against editions before any record is created.
+      - Approving this material would allow chandogya-upanishad.embedded_in to be completed with a real text_id and range.
+      - Family would be brahmana if approved; no new family is required.
+
+  - id: mahanarayana-upanishad
+    title: Mahanarayana Upanishad
+    reason: >-
+      Transmitted within the Taittiriya Aranyaka, an approved text, and counted
+      among the Upanishads in several traditional lists, but deliberately held
+      out of Corpus v1 because its recension situation is unresolved.
+    status: review-later
+    notes:
+      - Exists in materially different recensions differing in length, arrangement, and verse count; these must not be merged, and a decision on which to approve is required before any record is created.
+      - Its relationship to the concluding prapathakas of taittiriya-aranyaka must be established per recension rather than assumed.
+      - Principal Upanishad status is not uniform across traditional lists; if approved, the family would be upanishad and the listing question belongs in scope_notes.
+      - Approval requires the recension question to be settled first, in the same manner as the Jaiminiya/Talavakara ambiguity recorded in data/corpus.yaml.
+
+  - id: manava-shrauta-sutra
+    title: Manava Shrauta Sutra
+    family_candidate: shrauta-sutra
+    reason: >-
+      Required to resolve the structural relationship of the already-approved
+      manava-shulba-sutra to its parent Shrauta tradition. The Shulba text is
+      transmitted within this Shrauta Sutra, so while this work remains
+      unapproved the Shulba record cannot state its containment and carries a
+      related_to link with text_id: null.
+    status: review-later
+    notes:
+      - Recording this candidate does NOT approve it and must not cause it to become approved automatically. Promotion into data/corpus.yaml is a human editorial decision under AGENTS.md.
+      - Before promotion it must undergo the same source verification as any other text - permitted witnesses registered in data/sources.yaml, edition basis recorded, and citation scheme established - and not merely be admitted because an approved text points toward it.
+      - Belongs to the Manava tradition within the Maitrayani line of the Krishna Yajurveda; see maitrayani-samhita and manava-shulba-sutra in data/corpus.yaml.
+      - If approved, manava-shulba-sutra.related_to should be revisited, and the relationship reconsidered as embedded_in only if containment can be established against editions rather than assumed.
+      - family_candidate records the family this work would take if approved; it is a proposal, not a taxonomy assignment.
+
+  - id: harivamsha
+    title: Harivamsha
+    family_candidate: itihasa
+    reason: >-
+      Transmitted in close association with the Mahabharata, an approved text,
+      and traditionally described as its khila or appendix. It therefore sits
+      at the edge of an approved work, and leaving it unrecorded would make
+      that boundary invisible.
+    status: review-later
+    notes:
+      - Traditionally described as a khila - a supplement or appendix to the Mahabharata - rather than as one of its parvans. That description is the tradition's own and is not a settled bibliographic classification.
+      - EDITION-AWARE TREATMENT REQUIRED - whether the work is handled as part of the Mahabharata or as a separate text differs by edition and by scholarly convention. The question must not be resolved in the abstract; it is decided per registered edition and recorded as such.
+      - MUST NOT INHERIT - if approved, it does not automatically take the Mahabharata's numbering, citation scheme, or source witnesses. Its own division and numbering must be established, and its own witnesses registered, independently.
+      - Approval requires separate source and edition verification under SOURCE_POLICY.md, exactly as for a freestanding work. Association with an approved text is not a route to approval.
+      - The Mahabharata record in data/corpus.yaml notes this candidate in prose only; no foreign key from the approved corpus to this candidate exists or may be created while it is unapproved.
+
+  - id: dhatupatha
+    title: Dhatupatha
+    family_candidate: vyakarana
+    reason: >-
+      An ancillary list of verbal roots belonging to the Paninian grammatical
+      tradition, and operationally required to interpret many Ashtadhyayi
+      rules. While it is unapproved, rules quoted from the approved
+      panini-ashtadhyayi record cannot be fully resolved.
+    status: review-later
+    notes:
+      - Lists the verbal roots with the markers and class assignments that Paninian rules operate on. A large body of Ashtadhyayi rules cannot be applied at all without it.
+      - NOT A CHAPTER OF THE ASHTADHYAYI. It is a separate text with its own transmission, and must not be treated as another section of the grammar, nor absorbed into that record if approved.
+      - Textual constitution and edition must be verified independently. The list circulates in differing forms, and the roots, their markers, and their accompanying glosses are not identical across transmissions or across the grammatical schools that transmit it.
+      - Later additions to the received list are recognised in scholarship; whether a given root belongs to the older stratum is a textual question requiring evidence, not an assumption.
+      - Approval requires its own registered witnesses under SOURCE_POLICY.md.
+
+  - id: ganapatha
+    title: Ganapatha
+    family_candidate: vyakarana
+    reason: >-
+      The collection of gana lists - the named groups of words that Paninian
+      rules refer to by their first member. Many Ashtadhyayi rules are
+      inoperable without it, so the approved panini-ashtadhyayi record is
+      incomplete in practice while it remains unapproved.
+    status: review-later
+    notes:
+      - Supplies the word-groups that Ashtadhyayi rules invoke by citing a group's first member; a rule referring to such a group cannot be applied unless the group's membership is known.
+      - MUST NOT BE SILENTLY RECONSTRUCTED. Modern grammatical databases, digital Paninian tools, and printed appendices often present a normalised or completed list. Such material is a modern editorial product, and using it as though it were the transmitted text would be exactly the invention of textual evidence that AGENTS.md forbids.
+      - The transmitted text and its edition basis require separate verification. Group membership varies across witnesses and across the commentarial tradition, and some groups are described in the tradition as open rather than fixed.
+      - Where membership cannot be established from a registered witness, the gap is recorded as a gap; no group may be completed editorially.
+      - Approval requires its own registered witnesses under SOURCE_POLICY.md.
+
+  - id: ashtanga-sangraha
+    title: Ashtanga Sangraha
+    family_candidate: ayurveda
+    reason: >-
+      Directly implicated in the textual and authorship question surrounding
+      the approved ashtanga-hridaya record, which notes that the relationship
+      between the two works, and whether they are by one author or by two of
+      the same name, is disputed. That question cannot be worked on while only
+      one of the pair exists as a registry object.
+    status: review-later
+    notes:
+      - A SEPARATE WORK. It must not be collapsed into ashtanga-hridaya, treated as a recension of it, or cited interchangeably with it. The two are closely related in content, largely prose-and-verse against the Hridaya's predominantly versified form, and the relation between them is precisely what is unresolved.
+      - Because they overlap heavily in content, neither may be used as a witness to the other's text; a passage found in both must be cited from the work actually consulted.
+      - Any future comparison of the pair - on authorship, priority, or dependence - is a HISTORICAL claim under CLAIM_POLICY.md requiring separate scholarly sourcing, and must not be settled from the texts' similarity alone.
+      - Source and edition verification must precede approval under SOURCE_POLICY.md; relevance to an approved text is not itself grounds for approval.
+      - If approved, the standing Ayurveda requirements apply unchanged - historical medical theory is not modern clinical evidence, and no prescription becomes medical advice.
+
+  - id: abhinavagupta-locana
+    title: Locana of Abhinavagupta on the Dhvanyaloka
+    family_candidate: commentary
+    reason: >-
+      The major commentary on Anandavardhana's Dhvanyaloka, an approved text.
+      Much of the later understanding of dhvani and of Sanskrit aesthetics
+      depends substantially on Abhinavagupta's reading, so without this record
+      the approved Dhvanyaloka record can only warn in prose that standard
+      interpretations are not its plain sense.
+    status: review-later
+    notes:
+      - MUST REMAIN DISTINCT from the base text. The Dhvanyaloka and the Locana are separate works, and a reading drawn from the commentary is a COMMENTARIAL claim that must be attributed to Abhinavagupta, never reported as what Anandavardhana wrote.
+      - The Locana is the principal route by which the Dhvanyaloka has been read, which makes the conflation easy and the separation necessary; the risk is that the commentator's position circulates as the root text's plain wording.
+      - If approved it would take family commentary with secondary_family aesthetics, following the convention already used for abhinavagupta-abhinavabharati.
+      - Abhinavagupta's other works remain outside Corpus v1. Approving this one would not admit them, and material from them may not be cited under it.
+      - The approved anandavardhana-dhvanyaloka record refers to this candidate in prose only; no structured link from the approved corpus to an unapproved candidate exists or may be created.
+
+  - id: nilakantha-tantrasangraha
+    title: Tantrasangraha of Nilakantha Somayaji
+    family_candidate: jyotisha
+    reason: >-
+      A major Sanskrit work of the Kerala mathematical and astronomical
+      tradition. It gives that tradition a specific, citable textual anchor for
+      comparison with the approved yuktibhasha record, so that the Kerala
+      school is represented by identified works rather than treated as an
+      undefined corpus object.
+    status: review-later
+    notes:
+      - The approved yuktibhasha record warns against conflating Sanskrit works of this tradition with it; that warning currently has no registry object to point at, which this candidate would supply.
+      - A distinct work in Sanskrit, not a version of the Yuktibhasha. Overlapping subject matter does not make either a witness to the other, and results common to both must be cited from the work actually consulted.
+      - NO CALCULUS-PRIORITY CLAIM is made or implied here. Comparisons between this tradition's series results and the later European calculus are contested modern-connection claims requiring history-of-mathematics sourcing under CLAIM_POLICY.md, and are deliberately absent from this candidate's metadata as from yuktibhasha's.
+      - Attribution, dating, and the relationships among works of this tradition are historical claims requiring separate sourcing; the conventional account must not be assumed at approval.
+      - Approval requires its own registered witnesses and a citation scheme established against a registered edition.
+
+  - id: bhaskara-i-aryabhatiyabhashya
+    title: Aryabhatiyabhashya of Bhaskara I
+    family_candidate: commentary
+    reason: >-
+      One of the major surviving commentarial witnesses to the approved
+      aryabhatiya record, which notes that the Aryabhatiya's verses are too
+      compressed to be read without exposition and that its commentarial
+      tradition is not yet recorded. This commentary is important both for how
+      the verses were understood and for the mathematics developed out of them.
+    status: review-later
+    notes:
+      - COMMENTARY IS NOT THE ROOT TEXT. What this work explains, expands, or supplies must not be reported as Aryabhata's own statement. Distinguishing what the Aryabhatiya states from what its commentators explain is the main reason to record this work, and would be defeated by treating the two as one voice.
+      - A commentator's worked example, method, or value may be later than the root verse. Attributing such material to Aryabhata is a HISTORICAL claim requiring evidence, not an inference from its presence in the commentary.
+      - The commentary is also a principal witness to the wording of the Aryabhatiya itself, so it bears on the root text's constitution as well as its interpretation; both roles must be kept distinct when it is cited.
+      - Other commentaries on the Aryabhatiya exist and are not covered by this candidate; approving this one does not admit them.
+      - If approved it would take family commentary with secondary_family jyotisha, following the convention used for commentary records elsewhere in the registry.

@@ -9,7 +9,7 @@ Each entry begins with an authentic passage or concept, explains it in context, 
 
 ## The method
 
-**Original → Understand → Perspectives → Connect → Explore**
+**Discover → Original → Understand → Perspectives → Connect → Explore**
 
 The project distinguishes between:
 

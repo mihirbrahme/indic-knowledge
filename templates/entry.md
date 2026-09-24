@@ -63,9 +63,39 @@ draft: true
 ## Connect
 
 <!-- Optional. Never invent a modern connection to make an entry feel
-     relevant. If present, classify it and say where the comparison stops. -->
+     relevant. If present, classify it and say where the comparison stops.
+
+     Open with the relationship type on its own line, bolded — the site
+     renders it as a small classification label:
+
+       **Still the same question.**
+
+     Close with an italic caveat on its own line, which renders as a quiet
+     footnote above a hairline:
+
+       *Conceptual connection — not historical or scientific equivalence.* -->
 
 ## Explore
 
 <!-- Three to five links of differing kinds: Read, Understand, Perspective,
-     Compare, Modern, Listen, See. -->
+     Compare, Modern, Listen, See. Lead each bullet with a bold route label
+     — **Read**, **Understand**, **Compare** — which the site renders as a
+     small editorial marker above the link. -->
+
+<details>
+<summary>Source &amp; edition notes</summary>
+
+<!-- Quiet provenance. Collapsed by default; the entry must read without it.
+     Take these from the passage note — never from the registries directly,
+     and never expose internal field names to the reader. -->
+
+- **Canonical text** — <text, as a reader would name it>
+- **Locator** — <chapter / verse, and the scheme it follows>
+- **Witness used** — <the source actually opened and read>
+- **Edition anchor** — <the registered printed edition; say so if it was not
+  consulted directly>
+- **Translation** — <working / editorial / quoted; and its review status>
+
+<!-- Close with the caveat that matters most, in one sentence. -->
+
+</details>

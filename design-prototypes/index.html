@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Indic Knowledge</title>
+<meta name="description" content="Design prototype — homepage. Not project content.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Serif+Devanagari:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,300..700;1,8..60,400..600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-head">
+  <div class="site-head__inner">
+    <a class="wordmark" href="index.html">
+      <span class="bindu" aria-hidden="true"></span>
+      Indic&nbsp;Knowledge
+    </a>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="index.html" aria-current="page">Discover</a>
+      <a href="#explore">Explore</a>
+      <a href="#pathways">Pathways</a>
+      <a href="#about">About</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ============================================ hero / today's question -->
+  <section class="hero wrap-w" aria-labelledby="todays-question">
+
+    <!-- One radial cue. Geometry, not ornament. -->
+    <svg class="hero__mark" viewBox="0 0 200 200" aria-hidden="true" focusable="false">
+      <circle cx="100" cy="100" r="88" fill="none" stroke="currentColor" stroke-width="1"/>
+      <circle cx="100" cy="100" r="56" fill="none" stroke="currentColor" stroke-width="1"/>
+      <line x1="100" y1="4" x2="100" y2="196" stroke="currentColor" stroke-width="1"/>
+      <line x1="4" y1="100" x2="196" y2="100" stroke="currentColor" stroke-width="1"/>
+      <circle cx="100" cy="100" r="4.5" fill="#A6633C" stroke="none"/>
+    </svg>
+
+    <span class="label">Today’s question</span>
+
+    <h1 class="question" id="todays-question">What makes the mind able to think?</h1>
+
+    <p class="teaser">
+      Most old texts begin by telling you something. This one begins by asking —
+      and what it asks about is the equipment you are using to ask it.
+    </p>
+
+    <p class="credit meta">
+      <span>Kena Upaniṣad · 1.1</span>
+      <span class="credit__dot" aria-hidden="true"></span>
+      <span>4 min read</span>
+    </p>
+
+    <a class="cta" href="entry.html">
+      Read today’s idea <span aria-hidden="true">→</span>
+    </a>
+  </section>
+
+  <!-- ==================================================== recently explored -->
+  <section class="band wrap-w" aria-labelledby="recent-h">
+    <h2 class="marker" id="recent-h"><span class="bindu" aria-hidden="true"></span><span class="label">Recently explored</span></h2>
+
+    <ul class="q-list">
+      <li>
+        <a class="q-item" href="entry.html">
+          <span class="q-item__q">How do you know that you know?</span>
+          <span class="meta">Nyāya Sūtra · 1.1.3 &nbsp;·&nbsp; 4 min</span>
+        </a>
+      </li>
+      <li>
+        <a class="q-item" href="entry.html">
+          <span class="q-item__q">Can a language be compressed into rules?</span>
+          <span class="meta">Aṣṭādhyāyī · 1.1.1 &nbsp;·&nbsp; 5 min</span>
+        </a>
+      </li>
+      <li>
+        <a class="q-item" href="entry.html">
+          <span class="q-item__q">What happens when nothing enters arithmetic?</span>
+          <span class="meta">Brāhmasphuṭasiddhānta · 18.30 &nbsp;·&nbsp; 4 min</span>
+        </a>
+      </li>
+      <li>
+        <a class="q-item" href="entry.html">
+          <span class="q-item__q">Why can imaginary sadness feel pleasurable?</span>
+          <span class="meta">Nāṭyaśāstra · 6 &nbsp;·&nbsp; 5 min</span>
+        </a>
+      </li>
+      <li>
+        <a class="q-item" href="entry.html">
+          <span class="q-item__q">How should a physician know what is wrong?</span>
+          <span class="meta">Caraka Saṃhitā · Vimānasthāna 4 &nbsp;·&nbsp; 4 min</span>
+        </a>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ========================================================= explore map -->
+  <section class="band wrap-w" id="explore" aria-labelledby="map-h">
+    <h2 class="marker" id="map-h"><span class="bindu" aria-hidden="true"></span><span class="label">Explore the map</span></h2>
+
+    <div class="routes">
+      <div class="route">
+        <h3><a href="#">Texts</a></h3>
+        <p>The works themselves, with what we know about how each one reaches us.</p>
+      </div>
+      <div class="route">
+        <h3><a href="#">Ideas</a></h3>
+        <p>Concepts followed across texts and centuries, not defined once and filed away.</p>
+      </div>
+      <div class="route">
+        <h3><a href="#">People</a></h3>
+        <p>Authors, commentators and compilers — and what is actually known about them.</p>
+      </div>
+      <div class="route">
+        <h3><a href="#">Disciplines</a></h3>
+        <p>Grammar, medicine, mathematics, law, poetics, logic and astronomy.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ pathways -->
+  <section class="band wrap-w" id="pathways" aria-labelledby="paths-h">
+    <h2 class="marker" id="paths-h"><span class="bindu" aria-hidden="true"></span><span class="label">Pathways</span></h2>
+
+    <ul class="paths">
+      <li class="path">
+        <a href="#">How India thought about knowledge</a>
+        <p>Nine entries · from the Upaniṣads to Navya-Nyāya</p>
+      </li>
+      <li class="path">
+        <a href="#">A beginner’s path into the Upaniṣads</a>
+        <p>Seven entries · no Sanskrit assumed</p>
+      </li>
+      <li class="path">
+        <a href="#">Mathematics before modern notation</a>
+        <p>Six entries · rules, altars and the problem of zero</p>
+      </li>
+    </ul>
+  </section>
+
+</main>
+
+<footer class="site-foot" id="about">
+  <div class="site-foot__inner">
+    <p class="meta" style="margin:0;max-width:30rem">
+      A source-first editorial project on India’s textual traditions.
+      Every entry names the text it rests on, and what has actually been verified.
+    </p>
+    <nav aria-label="Footer">
+      <a href="#">About</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>

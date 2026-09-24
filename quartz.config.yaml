@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=./quartz/plugins/quartz-plugins.schema.json
 configuration:
-  pageTitle: Quartz 5
+  pageTitle: Indic Knowledge
   pageTitleSuffix: ""
   enableSPA: true
   enablePopovers: true
@@ -15,31 +15,36 @@ configuration:
   theme:
     fontOrigin: googleFonts
     cdnCaching: true
+    # See docs/DESIGN_SYSTEM.md. One editorial serif carries display and prose;
+    # Inter handles metadata. The `title` slot is used to load Noto Serif
+    # Devanagari for original-language text -- custom.scss aliases it to
+    # --ik-deva and restyles the site title itself with the serif.
     typography:
-      header: Schibsted Grotesk
-      body: Source Sans Pro
+      header: Source Serif 4
+      body: Source Serif 4
+      interface: Inter
       code: IBM Plex Mono
     colors:
       lightMode:
-        light: "#faf8f8"
-        lightgray: "#e5e5e5"
-        gray: "#b8b8b8"
-        darkgray: "#4e4e4e"
-        dark: "#2b2b2b"
-        secondary: "#284b63"
-        tertiary: "#84a59d"
-        highlight: rgba(143, 159, 169, 0.15)
-        textHighlight: "#fff23688"
+        light: "#F7F3EA"        # Warm Ivory - page ground
+        lightgray: "#DED8CB"    # hairlines
+        gray: "#7B8598"         # graph lines, tertiary UI
+        darkgray: "#262626"     # Charcoal - body prose
+        dark: "#17263C"         # Deep Ink Navy - headings, the question
+        secondary: "#17263C"    # links sit in ink, not a separate link colour
+        tertiary: "#8A5130"     # copper dark enough for text (5.75:1)
+        highlight: rgba(217, 211, 199, 0.32)
+        textHighlight: "#e0cfae88"
       darkMode:
-        light: "#161618"
-        lightgray: "#393639"
-        gray: "#646464"
-        darkgray: "#d4d4d4"
-        dark: "#ebebec"
-        secondary: "#7b97aa"
-        tertiary: "#84a59d"
-        highlight: rgba(143, 159, 169, 0.15)
-        textHighlight: "#b3aa0288"
+        light: "#131A28"
+        lightgray: "#26303F"
+        gray: "#7A8798"
+        darkgray: "#DDD8CC"
+        dark: "#E8E3D8"
+        secondary: "#E8E3D8"
+        tertiary: "#D49468"
+        highlight: rgba(42, 52, 68, 0.55)
+        textHighlight: "#C9855A55"
 plugins:
   - source: "@quartz-community/created-modified-date"
     enabled: true
@@ -77,8 +82,9 @@ plugins:
   - source: "@quartz-community/github-flavored-markdown"
     enabled: true
     order: 40
+  # Entries are 3-5 minute reads; a TOC adds chrome without helping.
   - source: "@quartz-community/table-of-contents"
-    enabled: true
+    enabled: false
     order: 50
     layout:
       position: right
@@ -99,8 +105,11 @@ plugins:
   - source: "@quartz-community/citations"
     enabled: false
     order: 85
+  # Disabled. Project markdown is hard-wrapped at ~78 columns, so treating
+  # every newline as a <br> breaks editorial prose mid-sentence instead of
+  # letting it reflow to the reading measure.
   - source: "@quartz-community/hard-line-breaks"
-    enabled: true
+    enabled: false
     order: 90
   - source: "@quartz-community/ox-hugo"
     enabled: false
@@ -108,10 +117,25 @@ plugins:
   - source: "@quartz-community/roam"
     enabled: false
     order: 92
+  # Only the editorial serif is fetched remotely. The metadata sans and the
+  # Devanagari face use system stacks (see custom.scss): Quartz's font slots
+  # are header/body/code/title only, and `title` is glyph-subset to the site
+  # name, so neither could carry a fourth family. System Devanagari is also
+  # the more robust choice -- the signature element needs no network.
   - source: "@quartz-community/quartz-fonts"
     enabled: true
+    options:
+      useThemeFonts: true
+      fontOrigin: googleFonts
+      header: Source Serif 4
+      body: Source Serif 4
+      code: IBM Plex Mono
+  # Disabled deliberately. This ships an Obsidian-style theme whose CSS
+  # overrides configuration.theme.colors, the body font and the reading
+  # width, so the approved design system cannot take effect while it runs.
+  # Quartz's own theme.colors + @quartz-community/darkmode cover both modes.
   - source: "@quartz-themes/core"
-    enabled: true
+    enabled: false
     options:
       theme: default
       mode: both
@@ -147,8 +171,12 @@ plugins:
     enabled: true
   - source: "@quartz-community/og-image"
     enabled: true
+  # Disabled. It derives a CNAME file from baseUrl's host, which here would
+  # emit `mihirbrahme.github.io` -- the apex of the user site, not this
+  # project page at /indic-knowledge. Enable it only when a real custom
+  # domain is configured.
   - source: "@quartz-community/cname"
-    enabled: true
+    enabled: false
   - source: "@quartz-community/canvas-page"
     enabled: true
   - source: "@quartz-community/content-page"
@@ -157,13 +185,18 @@ plugins:
     enabled: true
   - source: "@quartz-community/tag-page"
     enabled: true
+  # A file explorer makes the site read as a vault. Reading pages use the
+  # minimal top header instead. Re-enable for an internal browsing view.
   - source: "@quartz-community/explorer"
-    enabled: true
+    enabled: false
     layout:
       position: left
       priority: 50
+  # Graph capability is retained, not displayed. Per docs/WEB_EXPERIENCE.md
+  # the global graph belongs under a future Explore -> Map, never on the
+  # homepage or an article.
   - source: "@quartz-community/graph"
-    enabled: true
+    enabled: false
     layout:
       position: right
       priority: 10
@@ -175,8 +208,10 @@ plugins:
       group: toolbar
       groupOptions:
         grow: true
+  # Superseded by the editorial `Continue exploring` block at the end of an
+  # entry, which is curated rather than automatic.
   - source: "@quartz-community/backlinks"
-    enabled: true
+    enabled: false
     layout:
       position: right
       priority: 50
@@ -195,25 +230,42 @@ plugins:
     layout:
       position: beforeBody
       priority: 30
+  # Disabled. It emits the site title as an <h2>, which lands above the
+  # page's own <h1> and breaks heading order. The wordmark is rendered as a
+  # banner link by site-nav instead.
   - source: "@quartz-community/page-title"
-    enabled: true
+    enabled: false
     layout:
       position: left
       priority: 10
+  # Local component. Links are listed here so the site never ships a nav item
+  # whose destination does not exist yet. Add Explore / Pathways when they do.
+  - source: "./quartz-plugins/site-nav"
+    enabled: true
+    options:
+      brand: Indic Knowledge
+      links:
+        Discover: "/"
+        About: "/about"
+    layout:
+      position: left
+      priority: 12
   - source: "@quartz-community/darkmode"
     enabled: true
     layout:
       position: left
       priority: 30
       group: toolbar
+  # Reading pages have no sidebars to hide, so the toggle has nothing to do.
   - source: "@quartz-community/reader-mode"
-    enabled: true
+    enabled: false
     layout:
       position: left
       priority: 35
       group: toolbar
+  # Reads as a file path. The header and Continue exploring carry wayfinding.
   - source: "@quartz-community/breadcrumbs"
-    enabled: true
+    enabled: false
     layout:
       position: beforeBody
       priority: 5
@@ -230,8 +282,8 @@ plugins:
     enabled: true
     options:
       links:
-        GitHub: https://github.com/jackyzha0/quartz
-        Discord Community: https://discord.gg/cRFFHYye7t
+        About: /about
+        Source on GitHub: https://github.com/mihirbrahme/indic-knowledge
     layout:
       position: footer
       priority: 50
@@ -249,6 +301,10 @@ plugins:
     enabled: true
     options: {}
     order: 50
+  # KEEP ENABLED. This is the frontmatter transformer (order 5); disabling it
+  # stops `draft: true` being parsed and silently publishes drafts. Its
+  # properties *table* is what we do not want on an editorial page, so that is
+  # switched off with hidePropertiesView instead.
   - source: "@quartz-community/note-properties"
     enabled: true
     options:
@@ -258,7 +314,7 @@ plugins:
         - tags
         - aliases
       excludedProperties: []
-      hidePropertiesView: false
+      hidePropertiesView: true
       delimiters: ---
       language: yaml
     order: 5

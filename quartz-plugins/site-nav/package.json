@@ -1,0 +1,31 @@
+{
+  "name": "site-nav",
+  "version": "1.0.0",
+  "description": "Minimal editorial top navigation for Indic Knowledge.",
+  "type": "module",
+  "private": true,
+  "exports": {
+    ".": { "import": "./index.js" },
+    "./components": { "import": "./components/index.js" },
+    "./package.json": "./package.json"
+  },
+  "main": "./index.js",
+  "quartz": {
+    "name": "site-nav",
+    "displayName": "Site Nav",
+    "category": "component",
+    "version": "1.0.0",
+    "quartzVersion": ">=5.0.0",
+    "dependencies": [],
+    "defaultOrder": 12,
+    "defaultEnabled": true,
+    "defaultOptions": { "links": {} },
+    "components": {
+      "SiteNav": {
+        "displayName": "Site Nav",
+        "defaultPosition": "left",
+        "defaultPriority": 12
+      }
+    }
+  }
+}

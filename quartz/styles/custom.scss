@@ -1,3 +1,912 @@
 @use "./variables.scss" as *;
 
-// put your custom CSS here!
+/* ==========================================================================
+   Indic Knowledge — production design system
+   Implements docs/DESIGN_SYSTEM.md on top of Quartz v5.
+
+   Palette and the three font slots come from quartz.config.yaml. Everything
+   structural lives here: the top header, the reading column, the passage
+   block, section markers and the source disclosure.
+   ========================================================================== */
+
+/* ------------------------------------------------------------------ tokens */
+
+:root {
+  /* Palette aliases. Quartz's --light/--dark/etc. carry the approved hexes;
+     these names make the rules below readable. */
+  --ik-ivory: var(--light);
+  --ik-ink: var(--dark);
+  --ik-charcoal: var(--darkgray);
+  --ik-rule: var(--lightgray);
+  --ik-copper-text: var(--tertiary);
+
+  --ik-ivory-2: #f1ebde; /* recessed ground for the passage block */
+  --ik-ivory-3: #ede6d6; /* hover ground                          */
+  --ik-copper: #a6633c; /* graphic accent only — 4.24:1          */
+  --ik-rule-strong: #c6bfaf;
+  --ik-ink-muted: #4a5a72;
+  --ik-focus: #1f6feb;
+
+  /* Families. Only the editorial serif is fetched remotely; the metadata
+     sans and the Devanagari face use system stacks so the signature
+     elements of the page survive a CDN failure. */
+  --ik-serif: var(--bodyFont);
+  --ik-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  --ik-deva:
+    "Noto Serif Devanagari", "Noto Sans Devanagari", "Nirmala UI", "Kohinoor Devanagari",
+    "Devanagari Sangam MN", "Mangal", serif;
+
+  /* Type scale (mobile → desktop) */
+  --ik-t-micro: 0.6875rem;
+  --ik-t-small: 0.8125rem;
+  --ik-t-meta: 0.875rem;
+  --ik-t-body: clamp(1.0625rem, 1.005rem + 0.25vw, 1.1875rem);
+  --ik-t-lead: clamp(1.1875rem, 1.1rem + 0.38vw, 1.375rem);
+  --ik-t-h3: clamp(1.125rem, 1.07rem + 0.24vw, 1.25rem);
+  --ik-t-display: clamp(2.125rem, 1.35rem + 3.3vw, 3.875rem);
+  --ik-t-deva: clamp(1.4375rem, 1.26rem + 0.75vw, 1.875rem);
+  --ik-t-iast: clamp(0.9375rem, 0.9rem + 0.19vw, 1.0625rem);
+
+  /* Line heights. Three of these are load-bearing — see DESIGN_SYSTEM.md. */
+  --ik-lh-prose: 1.72;
+  --ik-lh-display: 1.06;
+  --ik-lh-deva: 2;
+
+  /* 8px spine */
+  --ik-s1: 0.25rem;
+  --ik-s2: 0.5rem;
+  --ik-s3: 0.75rem;
+  --ik-s4: 1rem;
+  --ik-s5: 1.5rem;
+  --ik-s6: 2rem;
+  --ik-s7: 3rem;
+  --ik-s8: 4rem;
+  --ik-s9: 6rem;
+
+  --ik-measure: 43rem; /* ~688px of prose */
+  --ik-measure-wide: 60rem;
+  --ik-gutter: clamp(1.25rem, 0.6rem + 2.8vw, 3rem);
+  --ik-passage-pad: clamp(1rem, 4vw, 3rem);
+  --ik-radius: 2px;
+}
+
+:root[saved-theme="dark"],
+body.theme-dark {
+  --ik-ivory-2: #18202f;
+  --ik-ivory-3: #1d2637;
+  --ik-copper: #c9855a;
+  --ik-rule-strong: #354154;
+  --ik-ink-muted: #9aa6b8;
+  --ik-focus: #6fa8ff;
+}
+
+/* ------------------------------------------------------------------- base */
+
+body {
+  font-family: var(--ik-serif);
+  font-size: var(--ik-t-body);
+  line-height: var(--ik-lh-prose);
+  -webkit-font-smoothing: antialiased;
+}
+
+:focus-visible {
+  outline: 2px solid var(--ik-focus);
+  outline-offset: 3px;
+  border-radius: 1px;
+}
+
+/* base.scss sets `html { width: 100vw }`. 100vw counts the scrollbar, so the
+   document ends up wider than the viewport and every page reports horizontal
+   overflow. 100% is the correct measure. */
+html {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+#quartz-root.page {
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* ============================================================== layout ===
+   Quartz ships a three-column grid built for a vault. Reading pages get a
+   single centred column with the sidebar re-cast as a top header. Capability
+   is not removed; the article simply stops being framed by chrome. */
+
+#quartz-body {
+  display: block !important;
+  width: 100%;
+  max-width: 100%;
+  /* base.scss pads this container without border-box, which pushes the
+     document past the viewport on narrow screens. The reading column and
+     the header supply their own gutters. */
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+/* The left sidebar becomes the global header strip. */
+#quartz-body > .left.sidebar {
+  position: static;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--ik-s5);
+  width: 100%;
+  max-width: none;
+  height: auto;
+  flex: none;
+  order: 0;
+  border-bottom: 1px solid var(--ik-rule);
+  /* Align the header's contents to the reading column rather than the
+     viewport, so the wordmark sits over the start of the prose. */
+  padding: var(--ik-s5) max(var(--ik-gutter), calc((100% - var(--ik-measure)) / 2));
+  margin: 0;
+  box-sizing: border-box;
+}
+
+#quartz-body > .right.sidebar {
+  display: none;
+}
+
+#quartz-body > .center {
+  /* base.scss pins `min-width: 100%` on .center for the grid layout; it has
+     to be released before a reading measure can take effect. */
+  min-width: 0 !important;
+  max-width: calc(var(--ik-measure) + var(--ik-gutter) * 2) !important;
+  width: 100%;
+  margin: 0 auto !important;
+  padding: 0 var(--ik-gutter) var(--ik-s8);
+  box-sizing: border-box;
+  border: 0;
+}
+
+/* --------------------------------------------------------------- header */
+
+/* site-nav renders the wordmark and the nav; `display: contents` lets both
+   sit directly in the header's flex row. The bindu is drawn by the
+   component's own CSS. */
+.left.sidebar .site-brand {
+  order: 1;
+  flex: none;
+}
+
+.left.sidebar .site-nav {
+  order: 2;
+  flex: none;
+}
+
+.left.sidebar > .flex-component {
+  order: 4;
+  flex: none !important;
+  margin-left: auto;
+}
+
+.left.sidebar > .mobile-only {
+  order: 3;
+  flex: 1 1 auto;
+}
+
+.left.sidebar .site-brand,
+.left.sidebar .site-nav,
+.left.sidebar > .flex-component {
+  position: relative;
+  z-index: 1;
+}
+
+/* Header controls sit as quiet glyphs, not buttons. */
+.left.sidebar .darkmode,
+.left.sidebar .search {
+  margin: 0;
+}
+
+.left.sidebar .search .search-button {
+  background: transparent;
+  border: 1px solid var(--ik-rule);
+  border-radius: var(--ik-radius);
+  padding: 0.35rem 0.7rem;
+  font-family: var(--ik-sans);
+  font-size: var(--ik-t-small);
+  color: var(--ik-ink-muted);
+}
+
+.left.sidebar .search .search-button:hover {
+  background: var(--ik-ivory-3);
+  color: var(--ik-ink);
+}
+
+.left.sidebar .search .search-button p {
+  font-family: var(--ik-sans);
+  font-size: var(--ik-t-small);
+  color: inherit;
+}
+
+/* ------------------------------------------------------- article header */
+
+.center > .page-header {
+  padding-top: var(--ik-s8);
+  margin-bottom: var(--ik-s6);
+}
+
+.center > .page-header > .popover-hint {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Exactly one visible h1 per page. Entries and most notes carry their own
+   `# heading` in the body, so the plugin's duplicate title is suppressed
+   where one exists; passage notes start at `## Original` and keep it. */
+.center:has(.markdown-rendered > h1) h1.article-title {
+  display: none;
+}
+
+h1.article-title {
+  font-family: var(--ik-serif);
+  font-size: var(--ik-t-display);
+  line-height: var(--ik-lh-display);
+  font-weight: 400;
+  letter-spacing: -0.022em;
+  color: var(--ik-ink);
+  margin: 0 0 var(--ik-s6);
+  max-width: 24ch;
+  text-wrap: balance;
+}
+
+/* Metadata sits above the question, in the small-caps voice. */
+p.content-meta {
+  order: -1;
+  margin: 0;
+  font-family: var(--ik-sans);
+  font-size: var(--ik-t-micro);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ik-ink-muted);
+  font-variant-numeric: lining-nums tabular-nums;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ik-s3);
+  align-items: baseline;
+}
+
+p.content-meta > * {
+  color: inherit;
+}
+
+p.content-meta > * + *::before {
+  content: "·";
+  margin-right: var(--ik-s3);
+  color: var(--ik-rule-strong);
+}
+
+/* The plugin appends its own comma separator; ours is the middot. */
+p.content-meta[show-comma="true"] > *:not(:last-child)::after {
+  content: none;
+}
+
+/* A landing page is not an article: no date, no reading time. */
+body[data-slug="index"] p.content-meta {
+  display: none;
+}
+
+body[data-slug="index"] .center > .page-header {
+  padding-top: var(--ik-s9);
+}
+
+/* ================================================================ prose */
+
+article.popover-hint {
+  max-width: none;
+}
+
+.markdown-rendered {
+  font-family: var(--ik-serif);
+  font-size: var(--ik-t-body);
+  line-height: var(--ik-lh-prose);
+  color: var(--ik-charcoal);
+}
+
+.markdown-rendered p {
+  margin: 0 0 var(--ik-s5);
+  color: var(--ik-charcoal);
+}
+
+.markdown-rendered strong {
+  font-weight: 600;
+  color: var(--ik-ink);
+}
+
+/* The question. */
+.markdown-rendered > h1 {
+  font-family: var(--ik-serif);
+  font-size: var(--ik-t-display);
+  line-height: var(--ik-lh-display);
+  font-weight: 400;
+  letter-spacing: -0.022em;
+  color: var(--ik-ink);
+  margin: 0 0 var(--ik-s6);
+  max-width: 18ch;
+  text-wrap: balance;
+}
+
+/* The opening paragraph carries a little more air. */
+.markdown-rendered > h1 + p {
+  font-size: var(--ik-t-lead);
+  line-height: 1.55;
+}
+
+/* Section markers behave like magazine section rules, not headlines:
+   a bindu, a small caps label, and a hairline to the edge of the measure. */
+.markdown-rendered > h2 {
+  display: flex;
+  align-items: center;
+  gap: var(--ik-s3);
+  font-family: var(--ik-sans);
+  font-size: var(--ik-t-micro);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ik-ink);
+  margin: var(--ik-s8) 0 var(--ik-s6);
+  padding: 0;
+  border: 0;
+}
+
+.markdown-rendered > h2::before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--ik-copper);
+  flex: none;
+}
+
+.markdown-rendered > h2::after {
+  content: "";
+  flex: 1 1 auto;
+  height: 1px;
+  background: var(--ik-rule);
+}
+
+.markdown-rendered h3 {
+  font-family: var(--ik-serif);
+  font-size: var(--ik-t-h3);
+  font-weight: 600;
+  letter-spacing: -0.008em;
+  color: var(--ik-ink);
+  margin: var(--ik-s6) 0 var(--ik-s3);
+}
+
+.markdown-rendered h4,
+.markdown-rendered h5,
+.markdown-rendered h6 {
+  font-family: var(--ik-sans);
+  font-size: var(--ik-t-meta);
+  font-weight: 600;
+  color: var(--ik-ink);
+  margin: var(--ik-s5) 0 var(--ik-s2);
+}
+
+/* Heading anchors stay invisible until the heading is hovered or focused. */
+.markdown-rendered a[role="anchor"] {
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.markdown-rendered :is(h1, h2, h3):hover a[role="anchor"],
+.markdown-rendered a[role="anchor"]:focus-visible {
+  opacity: 0.45;
+}
+
+/* Links: ink text, quiet rule underneath, copper on hover. */
+.markdown-rendered a:not([role="anchor"]):not(.transclude-src) {
+  color: inherit;
+  background: none;
+  text-decoration: underline;
+  text-decoration-color: var(--ik-rule-strong);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+
+.markdown-rendered a:not([role="anchor"]):not(.transclude-src):hover {
+  color: var(--ik-copper-text);
+  text-decoration-color: var(--ik-copper);
+}
+
+/* Lists sit on the prose rhythm rather than hanging far out. */
+.markdown-rendered ul,
+.markdown-rendered ol {
+  margin: 0 0 var(--ik-s5);
+  padding-left: var(--ik-s5);
+}
+
+.markdown-rendered li {
+  margin-bottom: var(--ik-s3);
+  color: var(--ik-charcoal);
+}
+
+.markdown-rendered ul > li::marker {
+  color: var(--ik-copper);
+}
+
+/* Blockquotes that are NOT transclusions: a quiet marginal rule. */
+.markdown-rendered blockquote:not(.transclude) {
+  border-left: 2px solid var(--ik-rule-strong);
+  margin: var(--ik-s6) 0;
+  padding: 0 0 0 var(--ik-s5);
+  color: var(--ik-charcoal);
+  font-style: normal;
+}
+
+.markdown-rendered hr {
+  border: 0;
+  border-top: 1px solid var(--ik-rule);
+  margin: var(--ik-s7) 0;
+}
+
+/* ================================================= the passage component
+   The signature block. An entry transcludes a passage's Original section:
+
+     ![[kena-1-1#Original]]
+
+   which Quartz inlines as <blockquote class="transclude">. It must read as
+   *this is the evidence* — recessed, generously set, no ornament. */
+
+.markdown-rendered blockquote.transclude {
+  background: var(--ik-ivory-2);
+  border: 0;
+  border-radius: var(--ik-radius);
+  padding: var(--ik-s7) var(--ik-passage-pad);
+  /* Bleed outward by exactly the block's own padding so the original text
+     sits on the same optical margin as the prose above it. */
+  margin: var(--ik-s7) calc(var(--ik-passage-pad) * -1);
+  position: relative;
+  font-style: normal;
+  color: var(--ik-charcoal);
+}
+
+/* Printer's mark: a short copper axis at the block's shoulder. */
+.markdown-rendered blockquote.transclude::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: var(--ik-passage-pad);
+  width: 28px;
+  height: 2px;
+  background: var(--ik-copper);
+}
+
+/* The transcluded section heading ("Original") becomes the block's label. */
+.markdown-rendered blockquote.transclude > h2,
+.markdown-rendered blockquote.transclude > h3 {
+  display: block;
+  font-family: var(--ik-sans);
+  font-size: var(--ik-t-micro);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ik-ink-muted);
+  margin: 0 0 var(--ik-s5);
+}
+
+.markdown-rendered blockquote.transclude > h2::before,
+.markdown-rendered blockquote.transclude > h2::after,
+.markdown-rendered blockquote.transclude > h3::before,
+.markdown-rendered blockquote.transclude > h3::after {
+  content: none;
+}
+
+/* Original-language text. The passage note's Original section holds only
+   the source text, so every paragraph in the block is that text. */
+.markdown-rendered blockquote.transclude > p {
+  font-family: var(--ik-deva);
+  font-size: var(--ik-t-deva);
+  line-height: var(--ik-lh-deva);
+  font-weight: 400;
+  color: var(--ik-ink);
+  margin: 0 0 var(--ik-s5);
+  /* Devanagari gets no tracking — it breaks conjunct formation. */
+  letter-spacing: normal;
+  /* Verse lines are one per source line. `hard-line-breaks` is off so that
+     editorial prose reflows to the measure; pre-line restores the line
+     breaks exactly where the text needs them, without touching content. */
+  white-space: pre-line;
+}
+
+.markdown-rendered blockquote.transclude > p:last-of-type {
+  margin-bottom: var(--ik-s5);
+}
+
+/* "Link to original" — the quiet route to provenance. */
+.markdown-rendered blockquote.transclude a.transclude-src {
+  display: inline-block;
+  margin-top: var(--ik-s2);
+  padding-top: var(--ik-s4);
+  border-top: 1px solid var(--ik-rule);
+  width: 100%;
+  box-sizing: border-box;
+  font-family: var(--ik-sans);
+  font-size: var(--ik-t-small);
+  font-weight: 500;
+  color: var(--ik-copper-text);
+  text-decoration: none;
+  background: none;
+}
+
+.markdown-rendered blockquote.transclude a.transclude-src::after {
+  content: " →";
+}
+
+.markdown-rendered blockquote.transclude a.transclude-src:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+
+/* ===================================================== the passage page
+   A standalone passage note. Same evidence voice, research-oriented: the
+   original and transliteration lead, the apparatus follows in a quieter
+   register so it never outweighs the reading. */
+
+body[data-slug^="passages/"] {
+  /* Original — the first section, set as evidence. */
+  .markdown-rendered > h2#original + p {
+    font-family: var(--ik-deva);
+    font-size: var(--ik-t-deva);
+    line-height: var(--ik-lh-deva);
+    color: var(--ik-ink);
+    background: var(--ik-ivory-2);
+    border-radius: var(--ik-radius);
+    padding: var(--ik-s6) var(--ik-passage-pad);
+    margin: 0 calc(var(--ik-passage-pad) * -1) var(--ik-s6);
+    white-space: pre-line;
+  }
+
+  /* Transliteration — smaller, italic, subordinate to the original. */
+  .markdown-rendered > h2#transliteration + p {
+    font-family: var(--ik-serif);
+    font-size: var(--ik-t-iast);
+    line-height: 1.75;
+    font-style: italic;
+    color: var(--ik-ink-muted);
+    white-space: pre-line;
+    /* Long IAST strings must never force a horizontal scroll. */
+    overflow-wrap: anywhere;
+  }
+
+  /* Apparatus: present, useful, and visibly secondary to the reading. */
+  .markdown-rendered > h2#literal-notes ~ *,
+  .markdown-rendered > h2#claim-notes ~ * {
+    font-size: var(--ik-t-meta);
+  }
+
+  .markdown-rendered > h2#claim-notes,
+  .markdown-rendered > h2#claim-notes ~ * {
+    color: var(--ik-ink-muted);
+  }
+
+  .markdown-rendered > h2#claim-notes ~ ul li strong {
+    color: var(--ik-ink-muted);
+    font-weight: 600;
+  }
+}
+
+/* ============================================================== connect
+   The relationship type is set as a small classification label so the
+   section reads as "here is a modern comparison" and never as "this text
+   proved the following". Vocabulary lives in FRONTMATTER_SCHEMA.md. */
+
+.markdown-rendered > h2#connect + p > strong:only-child {
+  display: inline-block;
+  font-family: var(--ik-sans);
+  font-size: var(--ik-t-micro);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ik-copper-text);
+  margin-bottom: var(--ik-s2);
+}
+
+/* An italic-only paragraph closing a section reads as the caveat line. */
+.markdown-rendered > h2#connect ~ p > em:only-child {
+  display: block;
+  font-size: var(--ik-t-small);
+  color: var(--ik-ink-muted);
+  border-top: 1px solid var(--ik-rule);
+  padding-top: var(--ik-s3);
+}
+
+/* ============================================== continue exploring
+   The end of an entry is a rabbit hole, not a full stop. */
+
+.markdown-rendered > h2#explore {
+  margin-top: var(--ik-s9);
+  padding-top: var(--ik-s6);
+  border-top: 2px solid var(--ik-ink);
+}
+
+.markdown-rendered > h2#explore + ul {
+  list-style: none;
+  padding-left: 0;
+  margin-top: var(--ik-s2);
+}
+
+.markdown-rendered > h2#explore + ul > li {
+  margin: 0;
+  padding: var(--ik-s4) 0;
+  border-bottom: 1px solid var(--ik-rule);
+}
+
+/* The bullet's lead-in ("**Read** — ...") becomes the route label. */
+.markdown-rendered > h2#explore + ul > li > strong:first-child {
+  display: block;
+  font-family: var(--ik-sans);
+  font-size: var(--ik-t-micro);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ik-ink-muted);
+  margin-bottom: var(--ik-s2);
+}
+
+.markdown-rendered > h2#explore + ul > li a {
+  font-weight: 500;
+}
+
+/* ===================================================== source disclosure
+   Quiet by default. The article must read without opening it. */
+
+.markdown-rendered details {
+  margin: var(--ik-s7) 0 0;
+  border: 0;
+  padding: 0;
+  background: none;
+}
+
+.markdown-rendered details > summary {
+  font-family: var(--ik-sans);
+  font-size: var(--ik-t-meta);
+  font-weight: 500;
+  color: var(--ik-ink-muted);
+  cursor: pointer;
+  list-style: none;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ik-s3);
+  padding: var(--ik-s2) 0;
+}
+
+.markdown-rendered details > summary::-webkit-details-marker {
+  display: none;
+}
+
+.markdown-rendered details > summary::before {
+  content: "+";
+  font-family: var(--ik-sans);
+  font-weight: 600;
+  color: var(--ik-copper-text);
+  width: 1ch;
+}
+
+.markdown-rendered details[open] > summary::before {
+  content: "−";
+}
+
+.markdown-rendered details > summary:hover {
+  color: var(--ik-ink);
+}
+
+.markdown-rendered details > summary + * {
+  margin-top: var(--ik-s4);
+  padding-top: var(--ik-s5);
+  border-top: 1px solid var(--ik-rule);
+}
+
+.markdown-rendered details p,
+.markdown-rendered details li {
+  font-size: var(--ik-t-meta);
+  line-height: 1.6;
+}
+
+/* --------------------------------------------------------------- tables */
+
+.markdown-rendered table {
+  font-size: var(--ik-t-meta);
+  border-collapse: collapse;
+  margin: var(--ik-s6) 0;
+  width: 100%;
+}
+
+.markdown-rendered th {
+  font-family: var(--ik-sans);
+  font-size: var(--ik-t-small);
+  font-weight: 600;
+  text-align: left;
+  color: var(--ik-ink-muted);
+  border-bottom: 1px solid var(--ik-rule-strong);
+  padding: var(--ik-s2) var(--ik-s4) var(--ik-s2) 0;
+}
+
+.markdown-rendered td {
+  border-bottom: 1px solid var(--ik-rule);
+  padding: var(--ik-s3) var(--ik-s4) var(--ik-s3) 0;
+  vertical-align: top;
+}
+
+/* ---------------------------------------------------------------- footer */
+
+.page-footer,
+footer {
+  margin-top: var(--ik-s9);
+  border-top: 1px solid var(--ik-rule);
+  padding-top: var(--ik-s6);
+  font-family: var(--ik-sans);
+  font-size: var(--ik-t-small);
+  color: var(--ik-ink-muted);
+}
+
+footer ul {
+  padding: 0;
+  gap: var(--ik-s5);
+}
+
+footer a {
+  color: var(--ik-ink-muted);
+  text-decoration: none;
+}
+
+footer a:hover {
+  color: var(--ik-copper-text);
+}
+
+/* ================================================================ search
+   "Find an idea, text, person or question" — not developer-site search. */
+
+.search-container {
+  backdrop-filter: none;
+  background: color-mix(in srgb, var(--ik-ink) 28%, transparent);
+}
+
+.search-space {
+  background: var(--ik-ivory);
+  border: 1px solid var(--ik-rule-strong);
+  border-radius: var(--ik-radius);
+  box-shadow: 0 18px 48px rgb(23 38 60 / 12%);
+}
+
+.search-space input {
+  font-family: var(--ik-serif);
+  font-size: var(--ik-t-lead);
+  background: transparent;
+  color: var(--ik-ink);
+  border-bottom: 1px solid var(--ik-rule);
+  border-radius: 0;
+}
+
+.search-space input::placeholder {
+  color: var(--ik-ink-muted);
+  opacity: 0.75;
+}
+
+.search-space .result-card {
+  border-radius: var(--ik-radius);
+  padding: var(--ik-s4);
+  border: 0;
+  border-bottom: 1px solid var(--ik-rule);
+}
+
+.search-space .result-card:hover,
+.search-space .result-card:focus,
+.search-space .result-card.focus {
+  background: var(--ik-ivory-3);
+}
+
+.search-space .result-card > p {
+  font-family: var(--ik-serif);
+  color: var(--ik-ink);
+  margin: 0;
+}
+
+.search-space .result-card > ul {
+  font-family: var(--ik-sans);
+  font-size: var(--ik-t-small);
+  color: var(--ik-ink-muted);
+}
+
+/* -------------------------------------------------------------- popovers */
+
+.popover > .popover-inner {
+  background: var(--ik-ivory);
+  border: 1px solid var(--ik-rule-strong);
+  border-radius: var(--ik-radius);
+  box-shadow: 0 10px 30px rgb(23 38 60 / 10%);
+}
+
+/* =========================================================== responsive */
+
+@media all and ($mobile) {
+  #quartz-body > .left.sidebar {
+    flex-wrap: wrap;
+    gap: var(--ik-s4);
+    padding: var(--ik-s4) var(--ik-gutter);
+  }
+
+  #quartz-body > .left.sidebar::before,
+  #quartz-body > .left.sidebar::after {
+    content: none;
+  }
+
+  .left.sidebar .site-brand {
+    order: 1;
+    flex: 1 1 auto;
+  }
+
+  .left.sidebar > .flex-component {
+    order: 2;
+    margin-left: auto;
+  }
+
+  /* Nav drops to its own row and stays visible — no drawer, no hamburger. */
+  .left.sidebar .site-nav {
+    order: 3;
+    flex: 1 1 100%;
+  }
+
+  .left.sidebar > .mobile-only {
+    display: none;
+  }
+
+  .site-nav {
+    gap: var(--ik-s4) !important;
+  }
+
+  .center > .page-header {
+    padding-top: var(--ik-s7);
+  }
+
+  .markdown-rendered > h1 {
+    max-width: none;
+  }
+
+  /* Tap targets stay comfortable. */
+  .markdown-rendered li a,
+  .site-nav a,
+  .markdown-rendered details > summary {
+    padding-block: 0.15rem;
+  }
+}
+
+/* Nothing on the page may force a horizontal scroll. */
+.markdown-rendered pre,
+.markdown-rendered code,
+.markdown-rendered table {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@media print {
+  #quartz-body > .left.sidebar,
+  footer,
+  .page-footer {
+    display: none;
+  }
+
+  .markdown-rendered details {
+    display: block;
+  }
+
+  .markdown-rendered details > summary + * {
+    display: block !important;
+  }
+}

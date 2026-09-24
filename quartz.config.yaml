@@ -281,8 +281,10 @@ plugins:
   - source: "@quartz-community/footer"
     enabled: true
     options:
+      # Absolute URLs only. This component does not rewrite root-relative
+      # hrefs, so "/about" would resolve above the /indic-knowledge base
+      # path and 404. Internal wayfinding lives in the top nav.
       links:
-        About: /about
         Source on GitHub: https://github.com/mihirbrahme/indic-knowledge
     layout:
       position: footer

@@ -61,7 +61,9 @@ const css = `
 
 /** "entries/foo" -> "../", "index" -> "./" */
 const pathToRoot = (slug) => {
-  const parts = String(slug ?? "").split("/").filter((p) => p.length > 0)
+  const parts = String(slug ?? "")
+    .split("/")
+    .filter((p) => p.length > 0)
   const depth = Math.max(parts.length - 1, 0)
   return depth === 0 ? "./" : "../".repeat(depth)
 }

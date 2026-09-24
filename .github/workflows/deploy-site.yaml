@@ -1,0 +1,66 @@
+name: Deploy site
+
+# Publishes the Quartz build to GitHub Pages at
+# https://mihirbrahme.github.io/indic-knowledge/
+#
+# Every other workflow in this directory comes from upstream Quartz and is
+# gated to `jackyzha0/quartz`, so none of them runs here. This one is the
+# project's own, and is gated to this repository so forks stay quiet.
+#
+# Drafts are excluded by @quartz-community/remove-draft during the build, so
+# notes carrying `draft: true` never reach the published site.
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Let a running deploy finish rather than cancelling it mid-publish.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    if: ${{ github.repository == 'mihirbrahme/indic-knowledge' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Full history: @quartz-community/created-modified-date reads git
+          # dates, and a shallow clone makes every page look new.
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npx quartz build
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

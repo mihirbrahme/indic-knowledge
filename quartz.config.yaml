@@ -26,13 +26,13 @@ configuration:
       code: IBM Plex Mono
     colors:
       lightMode:
-        light: "#F7F3EA"        # Warm Ivory - page ground
-        lightgray: "#DED8CB"    # hairlines
-        gray: "#7B8598"         # graph lines, tertiary UI
-        darkgray: "#262626"     # Charcoal - body prose
-        dark: "#17263C"         # Deep Ink Navy - headings, the question
-        secondary: "#17263C"    # links sit in ink, not a separate link colour
-        tertiary: "#8A5130"     # copper dark enough for text (5.75:1)
+        light: "#F7F3EA" # Warm Ivory - page ground
+        lightgray: "#DED8CB" # hairlines
+        gray: "#7B8598" # graph lines, tertiary UI
+        darkgray: "#262626" # Charcoal - body prose
+        dark: "#17263C" # Deep Ink Navy - headings, the question
+        secondary: "#17263C" # links sit in ink, not a separate link colour
+        tertiary: "#8A5130" # copper dark enough for text (5.75:1)
         highlight: rgba(217, 211, 199, 0.32)
         textHighlight: "#e0cfae88"
       darkMode:

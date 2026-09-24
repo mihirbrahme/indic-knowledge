@@ -27,8 +27,8 @@ the locator, and the sources it was read from.
 
 ## How sources are handled
 
-The project distinguishes between a source being *registered* and a source being
-*read*. That difference is recorded on every passage.
+The project distinguishes between a source being _registered_ and a source being
+_read_. That difference is recorded on every passage.
 
 <details>
 <summary>How a passage is sourced</summary>

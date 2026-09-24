@@ -9,6 +9,10 @@ Before performing any work in this repository, read and follow:
 5. `data/corpus.yaml`
 6. `data/sources.yaml`
 
+For everyday editorial work, also read `docs/OPERATING_GUIDE.md`. It
+describes the normal operating mode: Mihir talks to you in ordinary
+language and you handle the files, metadata and validation.
+
 Treat `AGENTS.md` as the primary project instruction file.
 
 Do not duplicate or replace the project's source, evidence, editorial, or publication rules inside this file.

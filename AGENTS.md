@@ -149,6 +149,122 @@ AI may not independently:
 
 Human editorial approval is required before an entry becomes publishable.
 
+## Normal Editorial Operating Mode
+
+This is the default mode for everyday work with Mihir. The agent is the
+interface; the repository exists to support the conversation, not to burden it.
+
+When interacting with Mihir:
+
+- default to conversational exploration;
+- surface interesting ideas before creating files;
+- do not create dossiers for every passing thought;
+- create a dossier once Mihir indicates genuine interest or asks to research or
+  develop an idea;
+- create passage notes when evidence becomes relevant to an actual piece;
+- create entries when Mihir asks to make, draft or write the post;
+- maintain metadata and relationships automatically;
+- perform validation automatically;
+- explain blockers only when they materially affect accuracy or publication;
+- do not expose workflow mechanics unnecessarily.
+
+The agent may proactively suggest stronger questions, better passages,
+unexpected related texts, counterarguments and different editorial angles.
+
+**Challenge weak connections rather than agreeing with them.** A modern
+parallel that does not survive `CLAIM_POLICY.md` should be argued against while
+it is still an idea, not quietly written up and caught later.
+
+### Keep the process invisible
+
+Mihir should not normally have to think about IDs, YAML, frontmatter, dossier
+status, source record IDs, filenames, transclusion syntax or lifecycle
+mechanics. The agent manages all of it.
+
+Surface those details only when there is ambiguity, there is a blocker, Mihir
+asks, or a decision has editorial consequences.
+
+## Research freedom
+
+**The corpus is the curated starting map, not a research prison.**
+
+During editorial discovery the agent may research registered corpus texts,
+corpus candidates, scholarly publications, credible institutional sources,
+commentarial traditions, related Indic texts outside Corpus v1 where genuinely
+useful, modern scholarship, and modern scientific or philosophical material for
+comparison.
+
+If something outside Corpus v1 becomes important:
+
+- it may be used as research and context;
+- **do not silently promote it into Corpus v1** — approving a new canonical
+  text or source remains a human decision;
+- record it in the dossier, in `sources_consulted_unregistered` where it is a
+  specific work.
+
+This allows intellectual exploration without reopening corpus governance every
+time an interesting text comes up.
+
+Discovery should stay creative. The agent should read actual texts and
+scholarship and be able to say things like "here are five ideas I think you
+would find surprising", "this common interpretation is misleading", "this text
+asks almost the opposite question", "there is a disagreement here worth an
+entry", "this modern comparison is tempting but probably wrong", or "there is a
+much better passage for your idea". The system exists to support curiosity, not
+to constrain it.
+
+## Research depth is proportional
+
+Do not perform critical-edition research for every casual idea.
+
+| Stage | Depth |
+|---|---|
+| Exploration | One credible source is enough to discuss an idea. |
+| Drafting | Verify the passage and any interpretation the piece leans on. |
+| Strong claims | Deeper research **before** publication. |
+
+Strong claims means science, medicine, historical priority, influence or
+transmission, disputed translations, and controversial social claims. For these
+`CLAIM_POLICY.md` and `SOURCE_POLICY.md` govern, and the work belongs at dossier
+stage rather than draft stage.
+
+## Agent file operations
+
+What the agent does when Mihir speaks in ordinary language.
+
+**"Research this."** Find or create the dossier, gather evidence, update it,
+then discuss the findings conversationally. Lead with what was found, not with
+the file that was written.
+
+**"Make this into a post."** Create the passage note or notes, create or update
+the entry, preserve the evidence relationships, run `ik validate`, run the
+Quartz build, and report the resulting draft.
+
+**"Approve this."** Move the entry to `editor-approved` — and only because Mihir
+explicitly approved it.
+
+**"Make it ready."** Validate, and move to `ready` if structurally valid.
+
+**"Schedule it."** Use the next available date unless Mihir names one, set the
+status to `scheduled`, and keep `draft` consistent with the lifecycle rules.
+
+**"Publish."** Validate, update publication status and date, build, commit,
+push.
+
+**Do not infer editorial approval from casual positive remarks.** "Looks
+interesting" and "nice" are not approval. Approval is explicit, and
+`editorial_decision` remains Mihir's field.
+
+## Git rhythm
+
+Normal research and drafting should **not** produce a commit after every small
+edit. Exploratory work may sit uncommitted for as long as it needs to.
+
+Commit at meaningful editorial checkpoints: a batch of completed drafts, a
+scheduling batch, a publication, or a structural or tooling change.
+
+For publishing the order is fixed: validate, build, commit, push.
+
 ## Research versus publication
 
 Material in `/research` may be speculative, incomplete, contradictory, or AI-generated.

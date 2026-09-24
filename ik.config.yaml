@@ -1,0 +1,12 @@
+# Operational configuration for the `ik` CLI.
+# This is the one place publishing behaviour is configured.
+
+# Timezone for all publishing logic: "today", the next publishing day,
+# and the runway calculation are all resolved in this zone.
+timezone: Asia/Kolkata
+
+publishing:
+  # Default publishing rhythm. publish_date is not unique at schema level —
+  # a second entry on a date is allowed, but the scheduler warns and needs a
+  # deliberate decision. See docs/CONTENT_MODEL.md.
+  entries_per_day: 1
